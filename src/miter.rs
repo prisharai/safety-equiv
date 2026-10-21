@@ -93,8 +93,41 @@ pub fn build_miter(
 
     let gate_outputs = gate_mod.inline_into(&miter, "gate".into(), &drivers)?;
 
-    println!("gold outputs: {}", gold_outputs.len());
-    println!("gate outputs: {}", gate_outputs.len());
+    // xor (0 - match)
+    let mut mismatches = Vec::new();
+
+    for (i, (gold_output, gate_output)) in gold_outputs
+        .into_iter()
+        .zip(gate_outputs.into_iter())
+        .enumerate()
+    {
+        let xor_output = miter
+            .insert_gate(
+                Cell::new(CellType::XOR2, None),
+                format!("xor_{i}").into(),
+                &[gold_output, gate_output],
+            )?
+            .get_output(0);
+
+        mismatches.push(xor_output);
+    }
+
+    // or mismatches
+    let mut iter = mismatches.into_iter();
+
+    let mut mismatch = iter.next().ok_or(MiterError::NoOutputs)?;
+
+    for (i, next_mismatch) in iter.enumerate() {
+        mismatch = miter
+            .insert_gate(
+                Cell::new(CellType::OR2, None),
+                format!("or_{i}").into(),
+                &[mismatch, next_mismatch],
+            )?
+            .get_output(0);
+    }
+
+    mismatch.expose_with_name("mismatch".into());
 
     Ok(miter)
 }
