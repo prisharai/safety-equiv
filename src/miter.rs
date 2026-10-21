@@ -85,13 +85,13 @@ pub fn build_miter(
     }
     let drivers = miter.inputs().map(Some).collect::<Vec<_>>();
 
-    let gold_mod = ModInst::new(gold);
+    let gold_mod = ModInst::new(gold); // ModInst 
 
-    let gold_outputs = gold_mod.inline_into(&miter, "gold".into(), &drivers)?;
+    let gold_outputs = gold_mod.inline_into(&miter, "gold".into(), &drivers)?; // inline_into functionality 
 
-    let gate_mod = ModInst::new(gate);
+    let gate_mod = ModInst::new(gate); // ModInst
 
-    let gate_outputs = gate_mod.inline_into(&miter, "gate".into(), &drivers)?;
+    let gate_outputs = gate_mod.inline_into(&miter, "gate".into(), &drivers)?; // inline_into functionality 
 
     // xor (0 - match)
     let mut mismatches = Vec::new();
