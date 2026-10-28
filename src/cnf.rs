@@ -70,7 +70,6 @@ impl Cnf {
     }
 
     pub fn to_dimacs(&self) -> String {
-        // exporting cnf to dimacs format
         let mut result = String::new();
 
         let mut variables = self // DEBUGGING: printing variables mappings as comments
@@ -246,7 +245,7 @@ pub fn miter_to_cnf(miter: &Rc<Netlist<Cell>>) -> Result<Cnf, CnfError> {
         .variable(&mismatch_name)
         .ok_or_else(|| CnfError::MissingVariable(mismatch_name.to_string()))?;
 
-    cnf.add_clause(vec![mismatch_var]); // is the mismatch ever true ? 
+    cnf.add_clause(vec![mismatch_var]); // constraint just for miters, unit clause mismatch = 1 
 
     Ok(cnf)
 }

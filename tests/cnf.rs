@@ -48,3 +48,18 @@ fn convert_miter_to_cnf() {
 
     println!("{}", cnf.to_dimacs());
 }
+
+#[test]
+fn generated_dimacs_is_valid() {
+    let gold = make_and("gold");
+    let gate = make_or("gate");
+
+    let miter = build_miter(&gold, &gate).unwrap();
+    let cnf = miter_to_cnf(&miter).unwrap();
+
+    let dimacs_text = cnf.to_dimacs();
+
+    let parsed = dimacs::parse_dimacs(&dimacs_text);
+
+    assert!(parsed.is_ok(), "generated DIMACS should parse successfully");
+}
