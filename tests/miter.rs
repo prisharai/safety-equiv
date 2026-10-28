@@ -82,7 +82,7 @@ fn build_different_miter() {
 
     assert!(miter.verify().is_ok());
 
-    println!("{miter}");
+    eprintln!("{miter}");
 }
 
 #[test]
@@ -94,5 +94,5 @@ fn build_multi_output_miter() {
 
     assert!(miter.verify().is_ok());
 
-    println!("{miter}");
+    eprintln!("{miter}");
 }
