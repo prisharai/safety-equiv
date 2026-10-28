@@ -10,11 +10,7 @@ fn make_and(name: &str) -> Rc<Netlist<Cell>> {
     let b = nl.insert_input(Net::new_logic("b".into()));
 
     let y = nl
-        .insert_gate(
-            Cell::new(CellType::AND2, None),
-            "and".into(),
-            &[a, b],
-        )
+        .insert_gate(Cell::new(CellType::AND2, None), "and".into(), &[a, b])
         .unwrap()
         .get_output(0);
 
@@ -30,11 +26,7 @@ fn make_or(name: &str) -> Rc<Netlist<Cell>> {
     let b = nl.insert_input(Net::new_logic("b".into()));
 
     let y = nl
-        .insert_gate(
-            Cell::new(CellType::OR2, None),
-            "or".into(),
-            &[a, b],
-        )
+        .insert_gate(Cell::new(CellType::OR2, None), "or".into(), &[a, b])
         .unwrap()
         .get_output(0);
 
